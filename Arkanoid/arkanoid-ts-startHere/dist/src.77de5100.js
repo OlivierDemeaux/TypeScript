@@ -358,6 +358,35 @@ var Collision =
 function () {
   function Collision() {}
 
+  Collision.prototype.isCollidingBrick = function (ball, brick) {
+    if (ball.pos.x < brick.pos.x + brick.width && ball.pos.x + ball.width > brick.pos.x && ball.pos.y < brick.pos.y + brick.height && ball.pos.y + ball.height > brick.pos.y) {
+      return true;
+    }
+
+    return false;
+  }; //check collision with brick
+
+
+  Collision.prototype.isCollidingBricks = function (ball, bricks) {
+    var _this = this;
+
+    var colliding = false;
+    bricks.forEach(function (brick, i) {
+      if (_this.isCollidingBrick(ball, brick)) {
+        ball.changeYDirection();
+
+        if (brick.energy === 1) {
+          bricks.splice(i, 1);
+        } else {
+          brick.energy -= 1;
+        }
+
+        colliding = true;
+      }
+    });
+    return colliding;
+  };
+
   Collision.prototype.checkBallCollision = function (ball, paddle, view) {
     //1. check ball collision with paddle
     if (ball.pos.x + ball.width > paddle.pos.x && ball.pos.x < paddle.pos.x + paddle.width && ball.pos.y + ball.height === paddle.pos.y) {
@@ -623,6 +652,19 @@ function gameLoop(view, bricks, paddle, ball, collision) {
   }
 
   collision.checkBallCollision(ball, paddle, view);
+  var collidingBrick = collision.isCollidingBricks(ball, bricks);
+
+  if (collidingBrick) {
+    score += 1;
+    view.drawScore(score);
+  } //Game Over when ball leaves playfield
+
+
+  if (ball.pos.y > view.canvas.height) gameOver = true; //If game won, set gmeOver and display win
+
+  if (bricks.length === 0) return setGameWin(view); //Return if gameOver and don't run the requestAnimationFrame
+
+  if (gameOver) return setGameOver(view);
   requestAnimationFrame(function () {
     return gameLoop(view, bricks, paddle, ball, collision);
   });
