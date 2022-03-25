@@ -23,7 +23,7 @@ export class CanvasView {
         this.context?.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    initStartButton(startFunction: (view: CanvasView) => void){
+    initStartButton(startFunction: (view: CanvasView) => void): void{
         this.start?.addEventListener('click', () => startFunction(this));
     }
 
@@ -35,8 +35,8 @@ export class CanvasView {
         if(this.info) this.info.innerHTML = text;
     }
 
-    drawSprite(brick: Brick): void {
-        if(!brick) return;
+    drawSprite(brick: Brick | Paddle | Ball): void {
+        if(!brick) return
 
         this.context?.drawImage(
             brick.image,
