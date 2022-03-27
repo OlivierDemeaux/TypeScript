@@ -38,7 +38,7 @@ export class Ball {
 
   // Methods
   changeYDirection(): void {
-    this.speed.y = -this.speed.y;
+    this.speed.y = -(this.speed.y);
   }
 
   changeXDirection(): void {

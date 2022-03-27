@@ -43,4 +43,8 @@ export class Brick {
         this.brickEnergy = energy;
     }
 
+    set newImage(newImg: string) {
+        this.brickImage.src = newImg;
+    }
+
 }

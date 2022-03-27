@@ -29,6 +29,8 @@ export class Collision {
                     bricks.splice(i, 1);
                 } else {
                     brick.energy -= 1;
+                    if (brick.energy === 2)
+                        brick.newImage = "/brick-purple-breaking.25f8d677.png";
                 }
                 colliding = true
             }
@@ -42,7 +44,8 @@ export class Collision {
             ball.pos.x + ball.width > paddle.pos.x &&
             ball.pos.x < paddle.pos.x + paddle.width &&
             ball.pos.y + ball.height === paddle.pos.y
-        ) {
+        ) { 
+            console.log('here')
             ball.changeYDirection();
         }
         // check ball collison with walls
