@@ -40,10 +40,11 @@ export class Collision {
 
     checkBallCollision(ball: Ball, paddle: Paddle, view: CanvasView): void {
         //1. check ball collision with paddle
+        console.log(ball.pos.x, ball.pos.y, ball.height, paddle.pos.x, paddle.pos.y, paddle.width)
         if(
-            ball.pos.x + ball.width > paddle.pos.x &&
-            ball.pos.x < paddle.pos.x + paddle.width &&
-            ball.pos.y + ball.height === paddle.pos.y
+            ball.pos.x + ball.width >= paddle.pos.x &&
+            ball.pos.x <= paddle.pos.x + paddle.width &&
+            ball.pos.y + ball.height >= paddle.pos.y
         ) { 
             console.log('here')
             ball.changeYDirection();
